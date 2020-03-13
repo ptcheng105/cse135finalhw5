@@ -124,7 +124,7 @@
                     window.setTimeout(buildTable, 100);
                 } else {
                     let getManageTableData_xhr = new XMLHttpRequest();
-                    getManageTableData_xhr.open("GET", `https:/cse135hw5timeben.firebaseapp.com/getManageTableData?uid=${firebase.auth().currentUser.uid}`, true);
+                    getManageTableData_xhr.open("GET", `https://cse135hw5timeben.firebaseapp.com/getManageTableData?uid=${firebase.auth().currentUser.uid}`, true);
                     getManageTableData_xhr.onreadystatechange = function () {
                         if (getManageTableData_xhr.readyState === XMLHttpRequest.DONE && getManageTableData_xhr.status === 200) {
                             ret_data = JSON.parse(getManageTableData_xhr.responseText);

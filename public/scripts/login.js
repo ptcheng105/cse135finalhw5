@@ -14,7 +14,7 @@ btn_login.addEventListener("click", ()=>{
     var provider = new firebase.auth.GoogleAuthProvider();
 
     firebase.auth().signInWithPopup(provider).then(function(result) {
-        window.location = "https://cse135timbenfinalproject.firebaseapp.com/dashboard.html"
+        window.location = "https://cse135hw5timeben.firebaseapp.com/dashboard.html"
     }).catch(function(error){
         var errorCode = error.code;
         var errorMessage = error.message;
