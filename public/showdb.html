@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="show db page">
+    <meta name="author" content="Pui Tim Cheng">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tim's show db page</title>
+    <link rel="stylesheet" type="text/css" href="/styles/main.css">
+    
+    <style>
+        table {
+            width: 600px;
+        }
+        #dynamic_action_list div{
+            overflow-y: scroll;
+            height: 500px;
+            width: 500px;
+        }
+        #dynamic_action_list div p {
+            margin: 0;
+            padding: 3px;
+        }
+        .idle{
+            background-color: cadetblue;
+        }
+        .click{
+            background-color: aquamarine;
+        }
+        .moved{
+            background-color: rgb(172, 207, 111);
+        }
+        .key{
+            background-color: rgb(229, 231, 98);
+        }
+        .scroll{
+            background-color: darksalmon;
+        }
+        .unload{
+            background-color: rgb(226, 150, 150);
+        }
+    </style>
+</head>
+
+<body>
+    <header class="top sticky">
+        <nav class="navbar">
+            <a class="navbar-button" href="index.html">HOME</a>
+            <a class="navbar-button" href="images.html">IMAGES</a>
+            <a class="navbar-button" href="form.html">FORM</a>
+            <a class="navbar-button" href="table_and_lists.html">TABLES&LISTS</a>
+            <a class="navbar-button" href="externals.html">EXTERNALS</a>
+            <a class="navbar-button" href="reportertest.html">ACTION REPORT</a>
+            <a class="navbar-button active" href="showdb.html">SHOW DB</a>
+        </nav>
+    </header>
+    <main>
+        <h1>Show DB page</h1>
+        <noscript><h1 style="color: red">Java Script Disabled, this function will not be avaliable</h1></noscript>
+        <p>In the control panel, select session that you want to inspect directly, or filter the sessions with user id.</p>
+        <fieldset class="sticky" style="top: 5px; background-color: rgb(143, 207, 130);">
+            <legend><b>Control Panel</b></legend>
+            <label>Users ID:</label>
+            <select id="select_user"></select>
+            <label>Sessions ID:</label>
+            <select id="select_session"></select>
+        </fieldset>
+        
+        <h3 id="page_origin"></h3>
+        <table id="static_table"></table>
+        <table id="page_load_table"></table>
+        <section id="dynamic_action_list"></section>
+    </main>
+    <script src="./scripts/showdb.js"></script> 
+    <footer>
+        <details>   
+            <summary>Contact Info</summary>
+            <p>Email: ptcheng@ucsd.edu</p>
+            <address>
+                Address: 8730 Costa Verde Drive #2334, San Diego, CA, 92122
+            </address>
+        </details>
+        <script src="/scripts/main.js"></script>
+    </footer>
+</body>
+
+</html>

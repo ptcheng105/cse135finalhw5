@@ -1,0 +1,36 @@
+{
+  "hosting": {
+    "site": "cse135hw5timeben",
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [{
+      "source": "/sessionize",
+      "function": "sessionize"
+    },{
+      "source": "/collect",
+      "function": "collect"
+    },{
+      "source": "/getSessions",
+      "function": "getSessions"
+    },{
+      "source": "/getUsers",
+      "function": "getUsers"
+    },{
+      "source": "/getSessionData",
+      "function": "getSessionData"
+    },{
+      "source": "/verifyCurrentUser",
+      "function": "verifyCurrentUser"
+    },{
+      "source": "/getManageTableData",
+      "function": "getManageTableData"
+    },{
+      "source": "/getAllSessionsData",
+      "function": "getAllSessionsData"
+    }]
+  }
+}

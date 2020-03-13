@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="My Personal Page">
+    <meta name="author" content="Pui Tim Cheng">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tim's Personal Website Home Page</title>
+    <link rel="stylesheet" type="text/css" href="/styles/main.css">
+</head>
+
+<body>
+    <header class="top fixed">
+        <nav class="navbar">
+            <a class="navbar-button active" href="index.html">HOME</a>
+            <a class="navbar-button" href="images.html">IMAGES</a>
+            <a class="navbar-button" href="form.html">FORM</a>
+            <a class="navbar-button" href="table_and_lists.html">TABLES&LISTS</a>
+            <a class="navbar-button" href="externals.html">EXTERNALS</a>
+            <a class="navbar-button" href="reportertest.html">ACTION REPORT</a>
+            <a class="navbar-button" href="showdb.html">SHOW DB</a>
+            <a class="navbar-button" href="dashboard.html">User Analytics</a>
+        </nav>
+    </header>
+    <!--font page image with name-->
+    <div class="front-img">
+        <h1 class="name">Pui Tim Cheng</h1>
+    </div>
+    <main>
+        <section>
+            <h2>About Me</h2>
+            <article>
+                <h3>Introduction:</h3>
+                <p>Hello my fellow visitor! My name is Pui Tim Cheng and I am a Computer Engineer student about to
+                    graduate in June
+                    2020 and
+                    make an impact to the world!</p>
+            </article>
+            <hr>
+            <article>
+                <h3>Life Motto</h3>
+                <p>As someone once said: <i>When life gives you lemon, you run into the kitchen, throw it at the
+                        chef and yell: <em>"It's Raw!, You Donkey!"</em></i></p>
+                <img src="/media/gr_sandwich.gif" alt="idiot sandwich" height="200">
+                <p>Hence, The life lesson here is:</p>
+                <div><code> if(you_done_things_wrong) { you = idiot_sandwich; } </code></div>
+                <br>
+                So,
+                <pre> D O N 'T   BE   AN   IDIOT   SANDWICH   ! ! !</pre>
+                <hr>
+            </article>
+            <article>
+                <h3>Interest</h3>
+                <p>I have interests in a lot of stuff: sports, music, computer games, all kind of stuff, and willing to
+                    learn what I don't know!</p>
+                <div class="image-array">
+                    <img src="/media/ski.jpg" alt="ski" height="100">
+                    <img src="/media/guitar.jpg" alt="guitar" height="100">
+                    <img src="/media/game.jpg" alt="game" height="100">
+                </div>
+            </article>
+        </section>
+    </main>
+    <footer>
+        <details>
+            <summary>Contact Info</summary>
+            <p>Email: ptcheng@ucsd.edu</p>
+            <address>
+                Address: 8730 Costa Verde Drive #2334, San Diego, CA, 92122
+            </address>
+        </details>
+        <script src="/scripts/main.js"></script>
+    </footer>
+    <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-firestore.js"></script>
+    <script src="./scripts/tracker.js"></script>
+    <noscript>
+        <img src="https://cse135winter2020hw3.firebaseapp.com/sessionize?scriptoff=1" height=1 width=1 />
+    </noscript>
+
+</body>
+
+</html>

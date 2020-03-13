@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="forms">
+    <meta name="author" content="Pui Tim Cheng">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tim's Personal Website From page</title>
+    <link rel="stylesheet" type="text/css" href="/styles/main.css">
+</head>
+
+<body>
+    <header class="top sticky">
+        <nav class="navbar">
+            <a class="navbar-button" href="index.html">HOME</a>
+            <a class="navbar-button" href="images.html">IMAGES</a>
+            <a class="navbar-button active" href="form.html">FORM</a>
+            <a class="navbar-button" href="table_and_lists.html">TABLES&LISTS</a>
+            <a class="navbar-button" href="externals.html">EXTERNALS</a>
+            <a class="navbar-button" href="reportertest.html">ACTION REPORT</a>
+            <a class="navbar-button" href="showdb.html">SHOW DB</a>
+        </nav>
+    </header>
+    <main>
+        <h1>Tell Me About You!</h1>
+
+        <form action=" http://httpbin.org/post" method="post"
+            oninput="result4.value = result1.value = result2.value = result3.value = parseInt(range_in.value)">
+            <label for="search">Fake search button (only accept exactly 5 letters): </label><input type="search"
+                id="search" name="search" pattern="[A-Za-z]{5}" title="This search entry is useless!" placeholder="eg: aaaaa">
+            <fieldset>
+                <legend tabindex="0" autofocus>Getting to Know You!</legend>
+                <label for="picture">Picture(s) of You: </label><input type="file" id="picture" name="picuture" accept="image/*"
+                    multiple><br>
+                <label for="name">Name: </label><input type="text" id="name" name="name" placeholder="type in your name"><br>
+                <fieldset>
+                    <legend>Sex:</legend>
+                    <input type="radio" name="sex" id="sex_male" value="male"><label for="sex_male">Male</label><br>
+                    <input type="radio" name="sex" id="sex_female" value="female"><label
+                        for="sex_female">Female</label><br>
+                    <input type="radio" name="sex" id="sex_other" value="other"><label for="sex_other">Other</label><br>
+                </fieldset>
+                <fieldset>
+                    <legend>Do we share interest?:</legend>
+                    <input type="checkbox" name="interest" id="interest_sport" value="sport"><label
+                        for="interest_sport">Sport</label><br>
+                    <input type="checkbox" name="interest" id="interest_music" value="music"><label
+                        for="interest_music">Music</label><br>
+                    <input type="checkbox" name="interest" id="interest_game" value="game" checked><label
+                        for="interest_game">Game</label><br>
+                </fieldset>
+                <label for="color">Whats your favorite color? </label><input type="color" id="color" name="color"><br>
+                <label for="birthday">When is your birthday? </label><input type="date" id="birthday" name="birthday"><br>
+                <label for="sleep">What time do you go to sleep? </label><input type="time" id="sleep" name="sleep"><br>
+                <label for="website">what is your favorite website? type in url: </label><input type="url" id="website"
+                    name="website"><br>
+                <label for="story">Tell me your story:</label><br>
+                <textarea id="story" name="story" rows="5" cols="33" autocomplete="on" maxlength="500"></textarea>
+            </fieldset>
+
+            <fieldset>
+                <legend>Lets meet up!</legend>
+                <label for="meetup_date">When? </label><input type="datetime-local"  id="meetup_date" name="meetup_date"><br>
+                <label for="meetup_date">Where? </label><input type="text" id="meetup_pace" name="meetup_place"><br>
+            </fieldset>
+
+            <fieldset>
+                <legend>Contact info</legend>
+                <label for="email">Your email: </label><input type="email" id="email" name="email"><br>
+                <label for="phone">Your phone number: </label><input type="tel" id="phone" name="phone"><br>
+            </fieldset>
+
+            <fieldset>
+                <legend>Now tell me your bank information :)</legend>
+                <p>just kidding, don't!</p>
+                <label for="cardnumber">Your card number: </label><input type="number" id="cardnumber" name="cardnumber" readonly
+                    value="123123"><br>
+                <label for="cardpw">Your card password: </label><input type="password" id="cardpw" name="cardpw" disabled><br>
+                <label for="cardmonth">expiration date: </label><input type="month" id="cardmonth" name="cardmonth" disabled><br>
+
+            </fieldset>
+
+            <fieldset>
+                <legend>Describe You</legend>
+                <label for="select_ex">How would you describe yourself?</label>
+                <select name="select" id="select_ex">
+                    <optgroup disabled="disabled" label="bad adjectives(but disabled haha)">
+                        <option value="ugly">ugly</option>
+                        <option value="stupid">stupid</option>
+                    </optgroup>
+                    <optgroup label="good adjectives">
+                        <option value="nice">nice</option>
+                        <option value="kind">kind</option>
+                    </optgroup>
+                </select><br>
+
+                <label for="data_choice">Choose from these too:</label>
+                <input list="data_list" id="data_choice" name="data_choice" />
+                <datalist id="data_list">
+                    <option value="charming">
+                    <option value="smart">
+                </datalist><br>
+            </fieldset>
+            <fieldset>
+                <legend>Rate Me</legend>
+                <label>adjust the bar to show how much you like me!</label><br>
+                <input type="range" id="range_in" name="range_in" value="100" max="100" />
+                <p>result:</p>
+
+                <meter id="result2" min="0" max="100" low="10" high="80" optimum="100" value="100"></meter>meter level:
+                <output name="result1" for="range_in">100</output><br>
+                <progress id="result3" max="100" value="100"></progress><output name="result4"
+                    for="range_in">100</output>%<br>
+            </fieldset>
+            <input type="reset">
+            <input type="submit"> <span>or use this:</span>
+            <button>Submit</button>
+            <p>or submit with this prettier button</p>
+            <input type="image" src="/media/submit.svg" alt="submit" width="100">
+        </form>
+
+    </main>
+    <footer>
+        <details>
+            <summary>Contact Info</summary>
+            <p>Email: ptcheng@ucsd.edu</p>
+            <address>
+                Address: 8730 Costa Verde Drive #2334, San Diego, CA, 92122
+            </address>
+        </details>
+        <script src="/scripts/main.js"></script>
+    </footer>
+    <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-firestore.js"></script>
+    <script src="./scripts/tracker.js"></script>
+    <noscript>
+        <img src="https://cse135winter2020hw3.firebaseapp.com/sessionize?scriptoff=1" height=1 width=1 />
+    </noscript>
+</body>
+
+</html>

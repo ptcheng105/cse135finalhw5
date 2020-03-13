@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="picutres">
+    <meta name="author" content="Pui Tim Cheng">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tim's Personal Website Image page</title>
+    <link rel="stylesheet" type="text/css" href="/styles/main.css">
+</head>
+
+<body>
+    <header class="top fixed">
+        <nav class="navbar">
+            <a class="navbar-button" href="index.html">HOME</a>
+            <a class="navbar-button active" href="images.html">IMAGES</a>
+            <a class="navbar-button" href="form.html">FORM</a>
+            <a class="navbar-button" href="table_and_lists.html">TABLES&LISTS</a>
+            <a class="navbar-button" href="externals.html">EXTERNALS</a>
+            <a class="navbar-button" href="reportertest.html">ACTION REPORT</a>
+            <a class="navbar-button" href="showdb.html">SHOW DB</a>
+        </nav>
+    </header>
+    <main class="green_back">
+        <br>
+        <p>GIF:</p>
+        <picture>
+            <source media="(min-width:500px)" srcset="/media/picture_page/stillgif1.gif">
+            <img src="/media/picture_page/stillgif2.gif" alt="gif">
+        </picture>
+
+        <p>Animated GIF:</p>
+        <picture>
+            <source media="(min-width:500px)" srcset="/media/picture_page/anigif1.gif">
+            <img src="/media/picture_page/anigif2.gif" alt="agif">
+        </picture>
+
+        <p>JPEG:</p>
+        <picture>
+            <source media="(min-width:1000px)" srcset="/media/picture_page/jpeg1.jpg">
+            <img src="/media/picture_page/jpeg2.jpg" alt="jpeg">
+        </picture>
+
+        <p>PNG:</p>
+        <picture>
+            <source media="(min-width:500px)" srcset="/media/picture_page/png1.png">
+            <img src="/media/picture_page/png2.png" alt="png">
+        </picture>
+
+        <p>Animated PNG:</p>
+        <picture>
+            <source media="(min-width:1250px)" srcset="/media/picture_page/apng1.png">
+            <img src="/media/picture_page/apng2.png" alt="apng">
+        </picture>
+
+        <p>Webp:</p>
+        <picture>
+            <source media="(min-width:600px)" srcset="/media/picture_page/webp1.webp">
+            <img src="/media/picture_page/webp2.webp" alt="webp">
+        </picture>
+
+        <p>SVG:</p>
+        <picture>
+            <source media="(min-width:1000px)" srcset="/media/picture_page/svg1.svg">
+            <img src="/media/picture_page/svg2.svg" alt="svg">
+        </picture>
+
+    </main>
+    <footer>
+        <details>
+            <summary>Contact Info</summary>
+            <p>Email: ptcheng@ucsd.edu</p>
+                <address>
+                    Address: 8730 Costa Verde Drive #2334, San Diego, CA, 92122
+                </address>
+        </details>
+        <script src="/scripts/main.js"></script>
+    </footer>
+    <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-firestore.js"></script>
+    <script src="./scripts/tracker.js"></script>
+    <noscript>
+        <img src="https://cse135winter2020hw3.firebaseapp.com/sessionize?scriptoff=1" height=1 width=1 />
+    </noscript>
+</body>
+
+</html>

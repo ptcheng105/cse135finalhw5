@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="cse135 final project SPEED PAGE">
+    <meta name="author" content="Pui Tim Cheng">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cse135 final project SPEED PAGE</title>
+    <link rel="stylesheet" type="text/css" href="/styles/main.css">
+    <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-auth.js"></script>
+    <link rel="stylesheet" href="../jqwidgets/styles/jqx.base.css" type="text/css" />
+    <script type="text/javascript" src="../scripts/jquery.js"></script>
+    <script type="text/javascript" src="../jqwidgets/jqx-all.js"></script>
+    <noscript>
+        <meta http-equiv="refresh" content="0; url=https://cse135hw5timeben.firebaseapp.com/login.html" />
+    </noscript>
+    <script src="../scripts/authcheck.js"></script>
+    <style>
+        * {
+            text-align: center;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Ben & Tim Analytics</h1>
+    <hr>
+    <h3>Speed Information:</h3>
+    <div>
+        <span id="loginStatus"></span>
+        <button id="btn_logout">Logout</button>
+        <script src="../scripts/logout.js"></script>
+    </div>
+
+    <a href="../dashboard.html">To DashBoard</a>
+    <a href="browser.html">Show Browser Data</a>
+    <a href="speed.html">Show Speed Data</a>
+
+    <hr>
+    <div id='jqxChart' style="align-self: center; margin: auto; width:600px; height: 400px"></div>
+    <script>
+        $(document).ready(function () {
+
+            var data = [
+                { "x": 1, "y1": 1, "y2": 8 },
+                { "x": 2, "y1": 4, "y2": 5 },
+                { "x": 3, "y1": 3, "y2": 4 },
+                { "x": 4, "y1": 5, "y2": 8 }
+            ]
+
+            var settings = {
+                source: data,
+                title: "Line Chart",
+                categoryAxis:
+                {
+                    dataField: 'x'
+                },
+                colorScheme: 'scheme05',
+                seriesGroups:
+                    [
+                        {
+                            type: 'line',
+                            valueAxis:
+                            {
+                                unitInterval: 1,
+                                minValue: 0,
+                                maxValue: 10
+                            },
+                            series: [
+                                { dataField: 'y1', displayText: 'Line 1' },
+                                { dataField: 'y2', displayText: 'Line 2' }
+                            ]
+                        }
+                    ]
+            };
+            $('#jqxChart').jqxChart(settings);
+        });
+        
+
+    </script>
+</body>
+
+</html>

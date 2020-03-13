@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="cse135 final project DASH BOARD PAGE">
+    <meta name="author" content="Pui Tim Cheng">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cse135 final project DASH BOARD PAGE</title>
+    <link rel="stylesheet" type="text/css" href="/styles/main.css">
+    <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-auth.js"></script>
+    <link rel="stylesheet" href="./jqwidgets/styles/jqx.base.css" type="text/css" />
+    <script type="text/javascript" src="./scripts/jquery.js"></script>
+    <script type="text/javascript" src="./jqwidgets/jqx-all.js"></script>
+    <noscript>
+        <meta http-equiv="refresh" content="0; url=https://cse135hw5timeben.firebaseapp.com/login.html" />
+    </noscript>
+    <script src="./scripts/authcheck.js"></script>
+    <style>
+        * {
+            text-align: center;
+            align-self: center;
+            align-content: center;
+            align-items: center;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Ben & Tim Analytics</h1>
+    <hr>
+    <h3>DASH BOARD:</h3>
+    <div>
+        <span id="loginStatus">Loading...</span>
+        <button id="btn_logout">Logout</button>
+        <script src="./scripts/logout.js"></script>
+    </div>
+
+    <a href="reports/browser.html">Show Browser Data</a>
+    <a href="reports/speed.html">Show Speed Data</a>
+
+    <hr>
+    <section>
+        <div style="align-self: center; margin: auto;" id="UserManagementTable"></div>
+    </section>
+
+
+    <script>
+        function showUserManageTable(data) {
+            // prepare the data
+            var source =
+            {
+                dataType: "json",
+                localData: data
+            };
+            var dataAdapter = new $.jqx.dataAdapter(source);
+            $("#UserManagementTable").jqxDataTable(
+                {
+                    source: dataAdapter,
+                    columns: [
+                        { text: `Name`, dataField: 'name', width: 100 },
+                        { text: `Email`, dataField: 'email', width: 250 },
+                        { text: `Role`, dataField: 'auth_level', width: 100 },
+                        {
+                            text: 'Action', cellsAlign: 'center', align: "center", columnType: 'none', editable: false, sortable: false, dataField: null, width: 200, cellsRenderer: function (row, column, value) {
+                                // render custom column.
+                                return "<button data-row='" + row + "' class='editButtons'>Edit</button><button style='margin-left: 5px;' data-row='" + row + "' class='deleteButtons'>Delete</button>";
+                            }
+                        }
+                    ],
+                    rendered: function () {
+                        function deleteButtons() {
+                            if (!loginStatus) {
+                                window.setTimeout(deleteButtons, 100);
+                            } else {
+                                let all_buttons = document.querySelectorAll(".editButtons");
+                                all_buttons.forEach((currentValue, currentIndex, listObj) => {
+                                    let auth_val = $("#UserManagementTable").jqxDataTable('getCellValue', currentValue.dataset.row, 'auth_level');
+                                    if (auth_val == "Owner") {
+                                        currentValue.parentNode.innerHTML = '';
+                                    }
+                                    if (loginStatus.auth_level == "Admin" && auth_val == "Admin") {
+                                        currentValue.parentNode.innerHTML = '';
+                                    }
+                                })
+                                if ($(".editButtons").length > 0) {
+                                    let row = $(".editButtons").attr("data-row");
+                                    $(".deleteButtons").jqxButton();
+                                    $(".editButtons").jqxButton();
+
+                                }
+                                $(".editButtons").on('click', function (event) {
+                                    console.log(event.target);
+                                    let button_row = event.target.dataset.row;
+                                    let selected_email = $("#UserManagementTable").jqxDataTable('getCellValue', button_row, 'email');
+                                    console.log(selected_email);
+                                });
+
+                                $(".deleteButtons").click(function (event) {
+                                    console.log(event.target);
+                                    let button_row = event.target.dataset.row;
+                                    let selected_email = $("#UserManagementTable").jqxDataTable('getCellValue', button_row, 'email');
+                                    console.log(selected_email);
+                                });
+                            }
+                        }
+                        deleteButtons();
+                    },
+                    pageable: true,
+                    sortable: true,
+                    filterable: true,
+                    altRows: true,
+                    enableBrowserSelection: true,
+                    pageSize: 5,
+
+                });
+        }
+        //base upon the user level, request user data and build a table
+        firebase.auth().onAuthStateChanged(function (user) {
+            function buildTable() {
+                if (!loginStatus) {
+                    window.setTimeout(buildTable, 100);
+                } else {
+                    let getManageTableData_xhr = new XMLHttpRequest();
+                    getManageTableData_xhr.open("GET", `https:/cse135hw5timeben.firebaseapp.com/getManageTableData?uid=${firebase.auth().currentUser.uid}`, true);
+                    getManageTableData_xhr.onreadystatechange = function () {
+                        if (getManageTableData_xhr.readyState === XMLHttpRequest.DONE && getManageTableData_xhr.status === 200) {
+                            ret_data = JSON.parse(getManageTableData_xhr.responseText);
+                            console.log(ret_data);
+                            for (user in ret_data) {
+                                user.action = "<button>edit</button><button>delete</button>";
+                            }
+                            showUserManageTable(ret_data);
+                        }
+                    };
+                    getManageTableData_xhr.send();
+                }
+            }
+            buildTable();
+        });
+
+    </script>
+</body>
+
+</html>

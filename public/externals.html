@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="picutres">
+    <meta name="author" content="Pui Tim Cheng">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tim's Personal Website Image page</title>
+    <link rel="stylesheet" type="text/css" href="/styles/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hint.css/2.6.0/hint.base.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/1.0.8/purify.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Bangers&display=swap');
+
+        .special_font {
+            font-family: 'Bangers', cursive;
+        }
+    </style>
+
+</head>
+
+<body>
+    <header class="top sticky">
+        <nav class="navbar">
+            <a class="navbar-button" href="index.html">HOME</a>
+            <a class="navbar-button" href="images.html">IMAGES</a>
+            <a class="navbar-button" href="form.html">FORM</a>
+            <a class="navbar-button" href="table_and_lists.html">TABLES&LISTS</a>
+            <a class="navbar-button active" href="externals.html">EXTERNALS</a>
+            <a class="navbar-button" href="reportertest.html">ACTION REPORT</a>
+            <a class="navbar-button" href="showdb.html">SHOW DB</a>
+        </nav>
+    </header>
+    <main>
+        <h3>2 pages:</h3>
+        <iframe
+            src="https://www.google.com/url?sa=i&source=images&cd=&ved=2ahUKEwjx3bm7k5HnAhUDXq0KHWfAB38QjRx6BAgBEAQ&url=https%3A%2F%2Fgiphy.com%2Fexplore%2Fdog&psig=AOvVaw2R6emE0MNvzVqWiic14tg_&ust=1579574435100785"
+            height="400" width="400"></iframe>
+        <iframe height="400" width="400" src="https://medium.com/"></iframe>
+        <hr>
+
+        <h3>a remote video:</h3>
+        <iframe height="400" width="400" src="https://www.youtube.com/embed/uilkmUoXoLU"></iframe><br>
+        <hr>
+
+        <h3> 3 images:</h3>
+        <iframe height="400" width="400"
+            src="https://cdn.hasselblad.com/hasselblad-com/3efb310d-21c1-442a-85b9-4c426102d1e9_x1d-ii-xcd45p-01-web.jpg?auto=format&q=97"></iframe>
+        <iframe height="400" width="400"
+            src="https://cdn.hasselblad.com/hasselblad-com/ed27bb18-4938-41d4-9f7c-1508eae0c081_x1d-ii-xcd45p-02-web.jpg?auto=format&q=97"></iframe>
+        <iframe height="400" width="400"
+            src="https://cdn.hasselblad.com/hasselblad-com/567f974a8854a7d34612f6eb154dc8b86378ce36_x1d-ii-sample-02.jpg?auto=format&q=97"></iframe>
+        <hr>
+
+        <h3>2 script linked ( DOM purify and sweetalert):</h3>
+        <label>1) Paste in "<code>&lt;!-- This will be purified --&gt; this will not</code> " and click ok, the alert
+            popped up will be purified to "this will not":</label><input type="text" id="textbox"
+            placeholder="paste the text mentioned"><button id="alert">OK</button><br>
+        <label>2) Now click this button to see a remotely linked pop up window</label><button id="popup">GO!</button>
+        <script>
+            function callAlert() {
+                dirty = document.querySelector("#textbox").value;
+                clean = DOMPurify.sanitize(dirty);
+                alert(clean);
+            }
+            function callPopUp() {
+                Swal.fire('This pop up is remotely linked!')
+            }
+            document.getElementById("alert").addEventListener("click", callAlert);
+            document.getElementById("popup").addEventListener("click", callPopUp);
+        </script>
+        <hr>
+
+        <h3>1 css linked:</h3>
+        <p>Hover on the <b><span class="hint--top" aria-label="This is a hint!">THIS</span></b> word to see a remotely
+            linked css hint pop up on top.</p>
+        <hr>
+
+        <h3>5 links to other site</h3>
+        <p><a href="https://www.google.com/">Click this to go to google</a></p>
+        <p><a href="https://www.youtube.com/">Click this to go to youtube</a></p>
+        <p><a href="https://www.facebook.com/">Click this to go to facebook</a></p>
+        <p><a href="https://www.ucsd.edu/">Click this to go to ucsd</a></p>
+        <p><a href="https://slack.com/">Click this to go to slack</a></p>
+        <hr>
+
+        <h3>1 outside font linked:</h3>
+        <p>Notice <span class="special_font">This sentence have different font</span> than the rest of the page</p>
+        <hr>
+
+        <h3>10 load time records</h3>
+        <ol>
+            <li> DOMContentLoaded: 493 ms, Load: 3.71 s, time/date: Mon Jan 20 2020 13:07:13 GMT-0800 (Pacific Standard
+                Time)</li>
+            <li> DOMContentLoaded: 546 ms, Load: 3.96 s, time/date: Mon Jan 20 2020 13:08:53 GMT-0800 (Pacific Standard
+                Time)</li>
+            <li> DOMContentLoaded: 565 ms, Load: 3.82 s, time/date: Mon Jan 20 2020 13:09:49 GMT-0800 (Pacific Standard
+                Time)</li>
+            <li> DOMContentLoaded: 532 ms, Load: 3.44 s, time/date: Mon Jan 20 2020 13:10:25 GMT-0800 (Pacific Standard
+                Time)</li>
+            <li> DOMContentLoaded: 545 ms, Load: 3.26 s, time/date: Mon Jan 20 2020 13:11:05 GMT-0800 (Pacific Standard
+                Time)</li>
+            <li> DOMContentLoaded: 614 ms, Load: 3.46 s, time/date: Mon Jan 20 2020 13:14:03 GMT-0800 (Pacific Standard
+                Time)</li>
+            <li> DOMContentLoaded: 538 ms, Load: 3.24 s, time/date: Mon Jan 20 2020 13:15:08 GMT-0800 (Pacific Standard
+                Time)</li>
+            <li> DOMContentLoaded: 540 ms, Load: 4.04 s, time/date: Mon Jan 20 2020 13:17:13 GMT-0800 (Pacific Standard
+                Time)</li>
+            <li> DOMContentLoaded: 550 ms, Load: 3.69 s, time/date: Mon Jan 20 2020 13:18:03 GMT-0800 (Pacific Standard
+                Time)</li>
+            <li> DOMContentLoaded: 529 ms, Load: 3.99 s, time/date: Mon Jan 20 2020 13:20:15 GMT-0800 (Pacific Standard
+                Time)</li>
+        </ol>
+    </main>
+    <footer>
+        <details>
+            <summary>Contact Info</summary>
+            <p>Email: ptcheng@ucsd.edu</p>
+            <address>
+                Address: 8730 Costa Verde Drive #2334, San Diego, CA, 92122
+            </address>
+        </details>
+        <script src="/scripts/main.js"></script>
+    </footer>
+    <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-firestore.js"></script>
+    <script src="./scripts/tracker.js"></script>
+    <noscript>
+        <img src="https://cse135winter2020hw3.firebaseapp.com/sessionize?scriptoff=1" height=1 width=1 />
+    </noscript>
+</body>
+
+</html>

@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
+* {
+    box-sizing: inherit;
+    font-family: "Ralway", sans-serif;
+}
+
+body, html {
+    height: 100%;
+    color: rgb(83, 82, 82);
+    margin: 0;
+    line-height: 1.8;
+}
+
+main {
+    margin: 20px
+}
+
+.top {
+    top: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+.fixed{
+    position: fixed;
+}
+
+.sticky{
+    position: sticky;
+}
+
+.navbar {
+    width: 100%;
+    overflow: hidden;
+    display:flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    background-color: rgb(11, 49, 28);
+    position: sticky;
+}
+
+.navbar-button {
+    padding: 8px 16px;
+    color: whitesmoke;
+    text-decoration: none;
+    cursor: pointer;
+}
+.navbar-button:hover{
+    background-color: green;
+    color: yellow;
+}
+
+.active{
+    color: yellow;
+}
+
+.front-img{
+    background-image: url("../media/background.jpg");
+    min-height: 100%;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.85;
+}
+
+.name{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    color: white;
+    letter-spacing: 10px;
+    text-align: center;
+    white-space: nowrap;
+    font-size: 20px;
+}
+
+section {
+    margin: 20px 0px;
+}
+
+footer {
+    padding: 8px 20px;
+    background-color: rgb(11, 49, 28);
+    color: whitesmoke;
+    font-size: 16px;
+}
+
+em {
+    font-weight: bold;
+}
+
+.image-array{
+    display:flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.green_back {
+    background-color: rgb(40, 241, 40);
+    margin: 0;
+}
+td, th {
+    border: 2px solid #868383;
+}
+
+table {
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.free{
+    background-color: rgb(164, 204, 104);
+}
+
+.busy{
+    background-color: rgb(212, 97, 97);
+}
+
+.class{
+    background-color: yellow;
+}
+
+.gym{
+    background-color: orange;
+}
+
+.sleep{
+    background-color: rgb(145, 145, 240);
+}
