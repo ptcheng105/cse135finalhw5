@@ -71,7 +71,6 @@
             getSessions.onreadystatechange = function () {
                 if (getSessions.readyState === XMLHttpRequest.DONE && getSessions.status === 200) {
                     ret_data = JSON.parse(getSessions.responseText);
-                    console.log(JSON.parse(ret_data[0].Repoort));
                     sorted = sort(ret_data);
                     console.log(sorted);
                     buildGraph(sorted);
