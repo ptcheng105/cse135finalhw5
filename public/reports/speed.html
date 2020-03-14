@@ -7,7 +7,6 @@
     <meta name="author" content="Pui Tim Cheng">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>cse135 final project SPEED PAGE</title>
-    <link rel="stylesheet" type="text/css" href="/styles/main.css">
     <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-auth.js"></script>
     <link rel="stylesheet" href="../jqwidgets/styles/jqx.base.css" type="text/css" />
@@ -16,49 +15,44 @@
     <noscript>
         <meta http-equiv="refresh" content="0; url=https://cse135timbenfinalproject.firebaseapp.com/login.html" />
     </noscript>
+    <link rel="stylesheet" type="text/css" href="/styles/analytics.css">
     <script src="../scripts/authcheck.js"></script>
-    <style>
-        * {
-            text-align: center;
-            margin: auto;
-        }
-        .grid-container {
-            display: grid;
-            grid-template-columns:  auto auto;
-            background-color: #2196F3;
-            padding: 10px;
-        }
-        .grid-item {
-            background-color: rgba(255, 255, 255, 0.8);
-            border: 1px solid rgba(0, 0, 0, 0.8);
-            padding: 10px;
-            font-size: 30px;
-            text-align: center;
-        }
-    </style>
 </head>
 
 <body>
-    <h1>Ben & Tim Analytics</h1>
-    <hr>
-    <h3>Speed Information:</h3>
-    <div>
-        <span id="loginStatus"></span>
+    <h1 class="darkgreen">Ben & Tim Analytics</h1>
+    <h3 class="darkgreen">Speed Information:</h3>
+
+    <div class="darkgreen">
+        <span id="loginStatus">Loading...</span>
         <button id="btn_logout">Logout</button>
         <script src="../scripts/logout.js"></script>
     </div>
 
-    <a href="../dashboard.html">To DashBoard</a>
-    <a href="browser.html">Show Browser Data</a>
-    <a href="speed.html">Show Speed Data</a>
+    <div class="darkgreen">
+        <a class="clickable" href="../dashboard.html">DashBoard</a>
+        <a class="clickable" href="browser.html">Browser Data</a>
+        <a class="clickable active" href="speed.html">Speed Data</a>
+    </div>
+
+    <div class="ricewhite">
+        <div class="ricewhite" style="align-self: center; margin: auto;" id="dataTable">
+            Loading...
+        </div>
+    </div>
 
     <hr>
     <div class="grid-container">
-        <div id='jqxChart1' class= "grid-item" style="align-self: center; margin: auto; width:600px; height: 400px"></div>
-        <div id='jqxChart2' class= "grid-item" style="align-self: center; margin: auto; width:600px; height: 400px"></div>
-        <div id='jqxChart3' class= "grid-item" style="align-self: center; margin: auto; width:600px; height: 400px"></div>
-        <div id='jqxChart4' class= "grid-item" style="align-self: center; margin: auto; width:600px; height: 400px"></div>
-        <div id='jqxChart5' class= "grid-item" style="align-self: center; margin: auto; width:600px; height: 400px"></div>
+        <div id='jqxChart1' class="grid-item" style="align-self: center; margin: auto; width:600px; height: 400px">
+        </div>
+        <div id='jqxChart2' class="grid-item" style="align-self: center; margin: auto; width:600px; height: 400px">
+        </div>
+        <div id='jqxChart3' class="grid-item" style="align-self: center; margin: auto; width:600px; height: 400px">
+        </div>
+        <div id='jqxChart4' class="grid-item" style="align-self: center; margin: auto; width:600px; height: 400px">
+        </div>
+        <div id='jqxChart5' class="grid-item" style="align-self: center; margin: auto; width:600px; height: 400px">
+        </div>
     </div>
     <div style="align-self: center; margin: auto;" id="dataTable">
     </div>
@@ -67,11 +61,64 @@
             let getSessions = new XMLHttpRequest();
             let ret_data;
             let sorted;
-            getSessions.open("GET", `https://cse135timbenfinalproject.firebaseapp.com/getAllSessionsData`, true);  // change to new endpoint
+            getSessions.open("GET", `https://cse135hw5timeben.firebaseapp.com/getAllSessionsData`, true);  // change to new endpoint
             getSessions.onreadystatechange = function () {
                 if (getSessions.readyState === XMLHttpRequest.DONE && getSessions.status === 200) {
                     ret_data = JSON.parse(getSessions.responseText);
-                    console.log(JSON.parse(ret_data[0].Repoort));
+                    let data = [];
+                    ret_data.forEach(element => {
+                        report = JSON.parse(element.Report);
+                        //add user if not in report
+                        if (!report.user) {
+                            report.user = "N/A";
+                        }
+                        data.push(report);
+                    });
+                    console.log(data);
+                    //create table with new data
+                    // prepare the data
+                    var source =
+                    {
+                        dataType: "json",
+                        localData: data
+                    };
+
+                    // initialize the row details.
+                    var initRowDetails = function (id, row, element, rowinfo) {
+                        // update the details height.
+                        rowinfo.detailsHeight = 250;
+                        element.append($("<div style='margin: 10px;'></div>"));
+                        detailsdiv = $(element.children()[0]);
+                        //show information
+                        for (key in row.pageLoadInfo) {
+                            let value = row.pageLoadInfo[key];
+                            let linecontainer = $('<span>' + key + " : " + value + "</span></br>");
+                            $(detailsdiv).append(linecontainer);
+                        }
+
+                    }
+                    console.log("inited");
+                    var dataAdapter = new $.jqx.dataAdapter(source);
+                    $("#dataTable").jqxDataTable(
+                        {
+                            source: dataAdapter,
+                            columns: [
+                                { text: "User ID", dataField: 'user', width: 400 },
+                                { text: 'From Page', dataField: 'page', width: 450 },
+                                { text: 'Time', dataField: 'time', width: 150 },
+                            ],
+                            pageable: true,
+                            sortable: true,
+                            filterable: true,
+                            rowDetails: true,
+                            initRowDetails: initRowDetails,
+                            enableBrowserSelection: true,
+                            pageSize: 10,
+
+                        }
+                    );
+
+                    //graph
                     sorted = sort(ret_data);
                     console.log(sorted);
                     buildGraph(sorted);
@@ -79,11 +126,11 @@
             };
             getSessions.send();
         });
-        function buildGraph(sorted){
+        function buildGraph(sorted) {
             var data1 = []
             i = 0;
             for (report in sorted.homeSortedData) {
-                data1[i] = {"x": report, "y1": sorted.homeSortedData[report].pageLoadInfo.endTime - sorted.homeSortedData[report].pageLoadInfo.startTime, "y2": sorted.homeAvg}
+                data1[i] = { "x": report, "y1": sorted.homeSortedData[report].pageLoadInfo.endTime - sorted.homeSortedData[report].pageLoadInfo.startTime, "y2": sorted.homeAvg }
                 i++;
             }
             var settings1 = {
@@ -116,7 +163,7 @@
             var data2 = []
             i = 0;
             for (report in sorted.imagesSortedData) {
-                data2[i] = {"x": report, "y1": sorted.imagesSortedData[report].pageLoadInfo.endTime - sorted.imagesSortedData[report].pageLoadInfo.startTime, "y2": sorted.imagesAvg}
+                data2[i] = { "x": report, "y1": sorted.imagesSortedData[report].pageLoadInfo.endTime - sorted.imagesSortedData[report].pageLoadInfo.startTime, "y2": sorted.imagesAvg }
                 i++;
             }
             var settings2 = {
@@ -145,12 +192,12 @@
                     ]
             };
             $('#jqxChart2').jqxChart(settings2);
-        
 
-        var data3 = []
+
+            var data3 = []
             i = 0;
             for (report in sorted.formSortedData) {
-                data3[i] = {"x": report, "y1": sorted.formSortedData[report].pageLoadInfo.endTime - sorted.formSortedData[report].pageLoadInfo.startTime, "y2": sorted.formAvg}
+                data3[i] = { "x": report, "y1": sorted.formSortedData[report].pageLoadInfo.endTime - sorted.formSortedData[report].pageLoadInfo.startTime, "y2": sorted.formAvg }
                 i++;
             }
             var settings3 = {
@@ -183,7 +230,7 @@
             var data4 = []
             i = 0;
             for (report in sorted.tablesSortedData) {
-                data4[i] = {"x": report, "y1": sorted.tablesSortedData[report].pageLoadInfo.endTime - sorted.tablesSortedData[report].pageLoadInfo.startTime, "y2": sorted.tablesAvg}
+                data4[i] = { "x": report, "y1": sorted.tablesSortedData[report].pageLoadInfo.endTime - sorted.tablesSortedData[report].pageLoadInfo.startTime, "y2": sorted.tablesAvg }
                 i++;
             }
             var settings4 = {
@@ -216,7 +263,7 @@
             var data5 = []
             i = 0;
             for (report in sorted.externalSortedData) {
-                data5[i] = {"x": report, "y1": sorted.externalSortedData[report].pageLoadInfo.endTime - sorted.externalSortedData[report].pageLoadInfo.startTime, "y2": sorted.externalAvg}
+                data5[i] = { "x": report, "y1": sorted.externalSortedData[report].pageLoadInfo.endTime - sorted.externalSortedData[report].pageLoadInfo.startTime, "y2": sorted.externalAvg }
                 i++;
             }
             var settings5 = {
@@ -280,12 +327,12 @@
             let externalMax;
 
             let a = b = c = d = e = 0;
-            for (index in ret_data){
+            for (index in ret_data) {
                 let report = JSON.parse(ret_data[index].Report);
                 if (report.pageLoadInfo) {
-                    switch (report.page){
+                    switch (report.page) {
                         case "https://cse135hw5timeben.firebaseapp.com/":
-                            if (homefirst){
+                            if (homefirst) {
                                 homeMax = report.pageLoadInfo.endTime - report.pageLoadInfo.startTime;
                                 homefirst = false;
                             }
@@ -298,7 +345,7 @@
                             a++;
                             break;
                         case "https://cse135hw5timeben.firebaseapp.com/index.html":
-                            if (homefirst){
+                            if (homefirst) {
                                 homeMax = report.pageLoadInfo.endTime - report.pageLoadInfo.startTime;
                                 homefirst = false;
                             }
@@ -311,7 +358,7 @@
                             a++;
                             break;
                         case "https://cse135hw5timeben.firebaseapp.com/images.html":
-                            if (imagesfirst){
+                            if (imagesfirst) {
                                 imagesMax = report.pageLoadInfo.endTime - report.pageLoadInfo.startTime;
                                 imagesfirst = false;
                             }
@@ -324,7 +371,7 @@
                             b++;
                             break;
                         case "https://cse135hw5timeben.firebaseapp.com/form.html":
-                            if (formfirst){
+                            if (formfirst) {
                                 formMax = report.pageLoadInfo.endTime - report.pageLoadInfo.startTime;
                                 formfirst = false;
                             }
@@ -337,7 +384,7 @@
                             c++;
                             break;
                         case "https://cse135hw5timeben.firebaseapp.com/table_and_lists.html":
-                            if (tablesfirst){
+                            if (tablesfirst) {
                                 tablesMax = report.pageLoadInfo.endTime - report.pageLoadInfo.startTime;
                                 tablesfirst = false;
                             }
@@ -349,8 +396,8 @@
                             tablesSortedTimes[d] = report.pageLoadInfo.startTime
                             d++;
                             break;
-                        case "https://cse135hw5timeben.firebaseapp.com/externals.html": 
-                            if (externalfirst){
+                        case "https://cse135hw5timeben.firebaseapp.com/externals.html":
+                            if (externalfirst) {
                                 externalMax = report.pageLoadInfo.endTime - report.pageLoadInfo.startTime;
                                 externalfirst = false;
                             }
@@ -371,8 +418,8 @@
             console.log(a);
             i = 0;
             homeSortedTimes.sort();
-            for (time in homeSortedTimes){
-                for (report in ret_data){ 
+            for (time in homeSortedTimes) {
+                for (report in ret_data) {
                     let r = JSON.parse(ret_data[report].Report);
                     if (r.pageLoadInfo && r.pageLoadInfo.startTime == homeSortedTimes[time]) {
                         homeSortedData[i] = r;
@@ -383,57 +430,57 @@
             imagesAvg = imagesAvg / b;
             i = 0;
             imagesSortedTimes.sort();
-            for (time in imagesSortedTimes){
-                for (report in ret_data){ 
+            for (time in imagesSortedTimes) {
+                for (report in ret_data) {
                     let r = JSON.parse(ret_data[report].Report);
                     if (r.pageLoadInfo && r.pageLoadInfo.startTime == imagesSortedTimes[time]) {
                         imagesSortedData[i] = r;
                         i++;
                     }
-                    
+
                 }
             }
             formAvg = formAvg / c;
             i = 0;
             formSortedTimes.sort();
-            for (time in formSortedTimes){
-                for (report in ret_data){ 
+            for (time in formSortedTimes) {
+                for (report in ret_data) {
                     let r = JSON.parse(ret_data[report].Report);
                     if (r.pageLoadInfo && r.pageLoadInfo.startTime == formSortedTimes[time]) {
                         formSortedData[i] = r;
                         i++;
                     }
-                    
+
                 }
             }
             tablesAvg = tablesAvg / d;
             i = 0;
             tablesSortedTimes.sort();
-            for (time in tablesSortedTimes){
-                for (report in ret_data){ 
+            for (time in tablesSortedTimes) {
+                for (report in ret_data) {
                     let r = JSON.parse(ret_data[report].Report);
                     if (r.pageLoadInfo && r.pageLoadInfo.startTime == tablesSortedTimes[time]) {
                         tablesSortedData[i] = r;
                         i++;
                     }
-                    
+
                 }
             }
             externalAvg = externalAvg / e;
             i = 0;
             externalSortedTimes.sort();
-            for (time in externalSortedTimes){
-                for (report in ret_data){ 
+            for (time in externalSortedTimes) {
+                for (report in ret_data) {
                     let r = JSON.parse(ret_data[report].Report);
                     if (r.pageLoadInfo && r.pageLoadInfo.startTime == externalSortedTimes[time]) {
                         externalSortedData[i] = r;
                         i++;
                     }
-                    
+
                 }
             }
 
-            return {homeSortedData, homeAvg, homeMax, imagesSortedData, imagesAvg, imagesMax, formSortedData, formAvg, formMax, tablesSortedData, tablesAvg, tablesMax, externalSortedData, externalAvg, externalMax};
+            return { homeSortedData, homeAvg, homeMax, imagesSortedData, imagesAvg, imagesMax, formSortedData, formAvg, formMax, tablesSortedData, tablesAvg, tablesMax, externalSortedData, externalAvg, externalMax };
         }
     </script>
 </body>

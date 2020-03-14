@@ -7,7 +7,6 @@
     <meta name="author" content="Pui Tim Cheng">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>cse135 final project DASH BOARD PAGE</title>
-    <link rel="stylesheet" type="text/css" href="/styles/main.css">
     <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.8.2/firebase-auth.js"></script>
     <link rel="stylesheet" href="./jqwidgets/styles/jqx.base.css" type="text/css" />
@@ -17,29 +16,24 @@
         <meta http-equiv="refresh" content="0; url=https://cse135hw5timeben.firebaseapp.com/login.html" />
     </noscript>
     <script src="./scripts/authcheck.js"></script>
-    <style>
-        * {
-            text-align: center;
-            align-self: center;
-            align-content: center;
-            align-items: center;
-            margin: auto;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="/styles/analytics.css">
 </head>
 
 <body>
-    <h1>Ben & Tim Analytics</h1>
-    <hr>
-    <h3>DASH BOARD:</h3>
-    <div>
-        <span id="loginStatus">Loading...</span>
+    <h1 class="darkgreen">Ben & Tim Analytics</h1>
+    <h3 class="darkgreen">DASH BOARD:</h3>
+    <div class = "darkgreen">
+        <span id="loginStatus"></span>
         <button id="btn_logout">Logout</button>
-        <script src="./scripts/logout.js"></script>
+        <script src="../scripts/logout.js"></script>
     </div>
 
-    <a href="reports/browser.html">Show Browser Data</a>
-    <a href="reports/speed.html">Show Speed Data</a>
+    <div class="darkgreen">
+        <a class="clickable active" href="dashboard.html">DashBoard</a>
+        <a class="clickable" href="./reports/browser.html">Browser Data</a>
+        <a class="clickable" href="./reports/speed.html">Speed Data</a>
+    </div>
+
 
     <hr>
     <section>

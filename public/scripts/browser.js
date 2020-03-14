@@ -8,8 +8,15 @@ function generateNewDataTable() {
             ret_data = JSON.parse(xhr_getallsessiondata.responseText);
             let data = [];
             ret_data.forEach(element => {
-                data.push(JSON.parse(element.Report));
+                report = JSON.parse(element.Report);
+                //add user if not in report
+                if (!report.user) {
+                    report.user = "N/A";
+                }
+                data.push(report);
             });
+
+
             console.log(data);
             //create table with new data
             // prepare the data
@@ -18,6 +25,7 @@ function generateNewDataTable() {
                 dataType: "json",
                 localData: data
             };
+
             // initialize the row details.
             var initRowDetails = function (id, row, element, rowinfo) {
                 // update the details height.
@@ -38,6 +46,7 @@ function generateNewDataTable() {
                 {
                     source: dataAdapter,
                     columns: [
+                        { text: "User ID", dataField: 'user', width: 400},
                         { text: 'From Page', dataField: 'page', width: 450 },
                         { text: 'Time', dataField: 'time', width: 150 },
                     ],
