@@ -14,7 +14,7 @@
     <script type="text/javascript" src="../scripts/jquery.js"></script>
     <script type="text/javascript" src="../jqwidgets/jqx-all.js"></script>
     <noscript>
-        <meta http-equiv="refresh" content="0; url=https://cse135hw5timeben.firebaseapp.com/login.html" />
+        <meta http-equiv="refresh" content="0; url=https://cse135timbenfinalproject.firebaseapp.com/login.html" />
     </noscript>
     <script src="../scripts/authcheck.js"></script>
     <style>
@@ -40,20 +40,37 @@
     <a href="speed.html">Show Speed Data</a>
 
     <hr>
-    <div id='jqxChart' style="align-self: center; margin: auto; width:600px; height: 400px"></div>
+    <div id='jqxChart1' style="align-self: center; margin: auto; width:600px; height: 400px"></div>
+    <div id='jqxChart2' style="align-self: center; margin: auto; width:600px; height: 400px"></div>
+    <div id='jqxChart3' style="align-self: center; margin: auto; width:600px; height: 400px"></div>
+    <div id='jqxChart4' style="align-self: center; margin: auto; width:600px; height: 400px"></div>
+    <div id='jqxChart5' style="align-self: center; margin: auto; width:600px; height: 400px"></div>
     <script>
         $(document).ready(function () {
-
-            var data = [
-                { "x": 1, "y1": 1, "y2": 8 },
-                { "x": 2, "y1": 4, "y2": 5 },
-                { "x": 3, "y1": 3, "y2": 4 },
-                { "x": 4, "y1": 5, "y2": 8 }
-            ]
-
-            var settings = {
-                source: data,
-                title: "Line Chart",
+            let getSessions = new XMLHttpRequest();
+            let ret_data;
+            let sorted;
+            getSessions.open("GET", `https://cse135timbenfinalproject.firebaseapp.com/getAllSessionsData`, true);  // change to new endpoint
+            getSessions.onreadystatechange = function () {
+                if (getSessions.readyState === XMLHttpRequest.DONE && getSessions.status === 200) {
+                    ret_data = JSON.parse(getSessions.responseText);
+                    sorted = sort(ret_data);
+                    console.log(sorted);
+                    buildGraph(sorted);
+                }
+            };
+            getSessions.send();
+        });
+        function buildGraph(sorted){
+            var data1 = []
+            i = 0;
+            for (report in sorted.homeSortedData) {
+                data1[i] = {"x": report, "y1": sorted.homeSortedData[report].pageLoadInfo.endTime - sorted.homeSortedData[report].pageLoadInfo.startTime, "y2": sorted.homeAvg}
+                i++;
+            }
+            var settings1 = {
+                source: data1,
+                title: "Home Page Average page load times",
                 categoryAxis:
                 {
                     dataField: 'x'
@@ -65,21 +82,341 @@
                             type: 'line',
                             valueAxis:
                             {
-                                unitInterval: 1,
+                                unitInterval: 200,
                                 minValue: 0,
-                                maxValue: 10
+                                maxValue: sorted.homeMax + 100
                             },
                             series: [
-                                { dataField: 'y1', displayText: 'Line 1' },
-                                { dataField: 'y2', displayText: 'Line 2' }
+                                { dataField: 'y1', displayText: 'Report Load Time ms' },
+                                { dataField: 'y2', displayText: 'Average Load Time ms' }
                             ]
                         }
                     ]
             };
-            $('#jqxChart').jqxChart(settings);
-        });
+            $('#jqxChart1').jqxChart(settings1);
+
+            var data2 = []
+            i = 0;
+            for (report in sorted.imagesSortedData) {
+                data2[i] = {"x": report, "y1": sorted.imagesSortedData[report].pageLoadInfo.endTime - sorted.imagesSortedData[report].pageLoadInfo.startTime, "y2": sorted.imagesAvg}
+                i++;
+            }
+            var settings2 = {
+                source: data2,
+                title: "Images Page Average page load times",
+                categoryAxis:
+                {
+                    dataField: 'x'
+                },
+                colorScheme: 'scheme05',
+                seriesGroups:
+                    [
+                        {
+                            type: 'line',
+                            valueAxis:
+                            {
+                                unitInterval: 200,
+                                minValue: 0,
+                                maxValue: sorted.imagesMax + 100
+                            },
+                            series: [
+                                { dataField: 'y1', displayText: 'Report Load Time ms' },
+                                { dataField: 'y2', displayText: 'Average Load Time ms' }
+                            ]
+                        }
+                    ]
+            };
+            $('#jqxChart2').jqxChart(settings2);
         
 
+        var data3 = []
+            i = 0;
+            for (report in sorted.formSortedData) {
+                data3[i] = {"x": report, "y1": sorted.formSortedData[report].pageLoadInfo.endTime - sorted.formSortedData[report].pageLoadInfo.startTime, "y2": sorted.formAvg}
+                i++;
+            }
+            var settings3 = {
+                source: data3,
+                title: "Form Page Average page load times",
+                categoryAxis:
+                {
+                    dataField: 'x'
+                },
+                colorScheme: 'scheme05',
+                seriesGroups:
+                    [
+                        {
+                            type: 'line',
+                            valueAxis:
+                            {
+                                unitInterval: 200,
+                                minValue: 0,
+                                maxValue: sorted.formMax + 100
+                            },
+                            series: [
+                                { dataField: 'y1', displayText: 'Report Load Time ms' },
+                                { dataField: 'y2', displayText: 'Average Load Time ms' }
+                            ]
+                        }
+                    ]
+            };
+            $('#jqxChart3').jqxChart(settings3);
+
+            var data4 = []
+            i = 0;
+            for (report in sorted.tablesSortedData) {
+                data4[i] = {"x": report, "y1": sorted.tablesSortedData[report].pageLoadInfo.endTime - sorted.tablesSortedData[report].pageLoadInfo.startTime, "y2": sorted.tablesAvg}
+                i++;
+            }
+            var settings4 = {
+                source: data4,
+                title: "Tables and Lists Page Average page load times",
+                categoryAxis:
+                {
+                    dataField: 'x'
+                },
+                colorScheme: 'scheme05',
+                seriesGroups:
+                    [
+                        {
+                            type: 'line',
+                            valueAxis:
+                            {
+                                unitInterval: 200,
+                                minValue: 0,
+                                maxValue: sorted.tablesMax + 100
+                            },
+                            series: [
+                                { dataField: 'y1', displayText: 'Report Load Time ms' },
+                                { dataField: 'y2', displayText: 'Average Load Time ms' }
+                            ]
+                        }
+                    ]
+            };
+            $('#jqxChart4').jqxChart(settings4);
+
+            var data5 = []
+            i = 0;
+            for (report in sorted.externalSortedData) {
+                data5[i] = {"x": report, "y1": sorted.externalSortedData[report].pageLoadInfo.endTime - sorted.externalSortedData[report].pageLoadInfo.startTime, "y2": sorted.externalAvg}
+                i++;
+            }
+            var settings5 = {
+                source: data5,
+                title: "Externals Page Average page load times",
+                categoryAxis:
+                {
+                    dataField: 'x'
+                },
+                colorScheme: 'scheme05',
+                seriesGroups:
+                    [
+                        {
+                            type: 'line',
+                            valueAxis:
+                            {
+                                unitInterval: 200,
+                                minValue: 0,
+                                maxValue: sorted.externalMax + 100
+                            },
+                            series: [
+                                { dataField: 'y1', displayText: 'Report Load Time ms' },
+                                { dataField: 'y2', displayText: 'Average Load Time ms' }
+                            ]
+                        }
+                    ]
+            };
+            $('#jqxChart5').jqxChart(settings5);
+        }
+
+        function sort(ret_data) {
+            let homeSortedData = [];
+            let homeSortedTimes = [];
+            let homeAvg = 0;
+            let homeMax;
+            let homefirst = true;
+
+            let imagesSortedData = [];
+            let imagesSortedTimes = [];
+            let imagesAvg = 0;
+            let imagesMax;
+            let imagesfirst = true;
+
+            let formSortedData = [];
+            let formSortedTimes = [];
+            let formAvg = 0;
+            let formfirst = true;
+            let formMax;
+
+
+            let tablesSortedData = [];
+            let tablesSortedTimes = [];
+            let tablesAvg = 0;
+            let tablesfirst = true;
+            let tablesMax;
+
+            let externalSortedData = [];
+            let externalSortedTimes = [];
+            let externalAvg = 0;
+            let externalfirst = true;
+            let externalMax;
+
+            let a = b = c = d = e = 0;
+            for (index in ret_data){
+                let report = JSON.parse(ret_data[index].Report);
+                if (report.pageLoadInfo) {
+                    switch (report.page){
+                        case "https://cse135hw5timeben.firebaseapp.com/":
+                            if (homefirst){
+                                homeMax = report.pageLoadInfo.endTime - report.pageLoadInfo.startTime;
+                                homefirst = false;
+                            }
+                            else {
+                                if (homeMax < report.pageLoadInfo.endTime - report.pageLoadInfo.startTime)
+                                    homeMax = report.pageLoadInfo.endTime - report.pageLoadInfo.startTime;
+                            }
+                            homeAvg += report.pageLoadInfo.endTime - report.pageLoadInfo.startTime;
+                            homeSortedTimes[a] = report.pageLoadInfo.startTime;
+                            a++;
+                            break;
+                        case "https://cse135hw5timeben.firebaseapp.com/index.html":
+                            if (homefirst){
+                                homeMax = report.pageLoadInfo.endTime - report.pageLoadInfo.startTime;
+                                homefirst = false;
+                            }
+                            else {
+                                if (homeMax < report.pageLoadInfo.endTime - report.pageLoadInfo.startTime)
+                                    homeMax = report.pageLoadInfo.endTime - report.pageLoadInfo.startTime;
+                            }
+                            homeAvg += report.pageLoadInfo.endTime - report.pageLoadInfo.startTime;
+                            homeSortedTimes[a] = report.pageLoadInfo.startTime;
+                            a++;
+                            break;
+                        case "https://cse135hw5timeben.firebaseapp.com/images.html":
+                            if (imagesfirst){
+                                imagesMax = report.pageLoadInfo.endTime - report.pageLoadInfo.startTime;
+                                imagesfirst = false;
+                            }
+                            else {
+                                if (imagesMax < report.pageLoadInfo.endTime - report.pageLoadInfo.startTime)
+                                    imagesMax = report.pageLoadInfo.endTime - report.pageLoadInfo.startTime;
+                            }
+                            imagesAvg += report.pageLoadInfo.endTime - report.pageLoadInfo.startTime;
+                            imagesSortedTimes[b] = report.pageLoadInfo.startTime;
+                            b++;
+                            break;
+                        case "https://cse135hw5timeben.firebaseapp.com/form.html":
+                            if (formfirst){
+                                formMax = report.pageLoadInfo.endTime - report.pageLoadInfo.startTime;
+                                formfirst = false;
+                            }
+                            else {
+                                if (formMax < report.pageLoadInfo.endTime - report.pageLoadInfo.startTime)
+                                    formMax = report.pageLoadInfo.endTime - report.pageLoadInfo.startTime;
+                            }
+                            formAvg += report.pageLoadInfo.endTime - report.pageLoadInfo.startTime;
+                            formSortedTimes[c] = report.pageLoadInfo.startTime;
+                            c++;
+                            break;
+                        case "https://cse135hw5timeben.firebaseapp.com/table_and_lists.html":
+                            if (tablesfirst){
+                                tablesMax = report.pageLoadInfo.endTime - report.pageLoadInfo.startTime;
+                                tablesfirst = false;
+                            }
+                            else {
+                                if (tablesMax < report.pageLoadInfo.endTime - report.pageLoadInfo.startTime)
+                                    tablesMax = report.pageLoadInfo.endTime - report.pageLoadInfo.startTime;
+                            }
+                            tablesAvg += report.pageLoadInfo.endTime - report.pageLoadInfo.startTime;
+                            tablesSortedTimes[d] = report.pageLoadInfo.startTime
+                            d++;
+                            break;
+                        case "https://cse135hw5timeben.firebaseapp.com/externals.html": 
+                            if (externalfirst){
+                                externalMax = report.pageLoadInfo.endTime - report.pageLoadInfo.startTime;
+                                externalfirst = false;
+                            }
+                            else {
+                                if (externalMax < report.pageLoadInfo.endTime - report.pageLoadInfo.startTime)
+                                    externalMax = report.pageLoadInfo.endTime - report.pageLoadInfo.startTime;
+                            }
+                            externalAvg += report.pageLoadInfo.endTime - report.pageLoadInfo.startTime;
+                            externalSortedTimes[e] = report.pageLoadInfo.startTime;
+                            e++;
+                            break;
+                    }
+                }
+
+            }
+
+            homeAvg = homeAvg / a;
+            console.log(a);
+            i = 0;
+            homeSortedTimes.sort();
+            for (time in homeSortedTimes){
+                for (report in ret_data){ 
+                    let r = JSON.parse(ret_data[report].Report);
+                    if (r.pageLoadInfo && r.pageLoadInfo.startTime == homeSortedTimes[time]) {
+                        homeSortedData[i] = r;
+                        i++;
+                    }
+                }
+            }
+            imagesAvg = imagesAvg / b;
+            i = 0;
+            imagesSortedTimes.sort();
+            for (time in imagesSortedTimes){
+                for (report in ret_data){ 
+                    let r = JSON.parse(ret_data[report].Report);
+                    if (r.pageLoadInfo && r.pageLoadInfo.startTime == imagesSortedTimes[time]) {
+                        imagesSortedData[i] = r;
+                        i++;
+                    }
+                    
+                }
+            }
+            formAvg = formAvg / c;
+            i = 0;
+            formSortedTimes.sort();
+            for (time in formSortedTimes){
+                for (report in ret_data){ 
+                    let r = JSON.parse(ret_data[report].Report);
+                    if (r.pageLoadInfo && r.pageLoadInfo.startTime == formSortedTimes[time]) {
+                        formSortedData[i] = r;
+                        i++;
+                    }
+                    
+                }
+            }
+            tablesAvg = tablesAvg / d;
+            i = 0;
+            tablesSortedTimes.sort();
+            for (time in tablesSortedTimes){
+                for (report in ret_data){ 
+                    let r = JSON.parse(ret_data[report].Report);
+                    if (r.pageLoadInfo && r.pageLoadInfo.startTime == tablesSortedTimes[time]) {
+                        tablesSortedData[i] = r;
+                        i++;
+                    }
+                    
+                }
+            }
+            externalAvg = externalAvg / e;
+            i = 0;
+            externalSortedTimes.sort();
+            for (time in externalSortedTimes){
+                for (report in ret_data){ 
+                    let r = JSON.parse(ret_data[report].Report);
+                    if (r.pageLoadInfo && r.pageLoadInfo.startTime == externalSortedTimes[time]) {
+                        externalSortedData[i] = r;
+                        i++;
+                    }
+                    
+                }
+            }
+
+            return {homeSortedData, homeAvg, homeMax, imagesSortedData, imagesAvg, imagesMax, formSortedData, formAvg, formMax, tablesSortedData, tablesAvg, tablesMax, externalSortedData, externalAvg, externalMax};
+        }
     </script>
 </body>
 
