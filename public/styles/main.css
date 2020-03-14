@@ -46,6 +46,7 @@ main {
     text-decoration: none;
     cursor: pointer;
 }
+
 .navbar-button:hover{
     background-color: green;
     color: yellow;

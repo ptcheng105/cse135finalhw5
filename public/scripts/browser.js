@@ -2,7 +2,7 @@ function generateNewDataTable() {
     console.log("yes");
     //get data
     let xhr_getallsessiondata = new XMLHttpRequest();
-    xhr_getallsessiondata.open("GET", "https://cse135timbenfinalproject.firebaseapp.com/getAllSessionsData", true);
+    xhr_getallsessiondata.open("GET", "https://cse135hw5timeben.firebaseapp.com/getAllSessionsData", true);
     xhr_getallsessiondata.onreadystatechange = function () {
         if (xhr_getallsessiondata.readyState === XMLHttpRequest.DONE && xhr_getallsessiondata.status === 200) {
             ret_data = JSON.parse(xhr_getallsessiondata.responseText);
