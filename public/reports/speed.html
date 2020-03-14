@@ -22,6 +22,19 @@
             text-align: center;
             margin: auto;
         }
+        .grid-container {
+            display: grid;
+            grid-template-columns:  auto auto;
+            background-color: #2196F3;
+            padding: 10px;
+        }
+        .grid-item {
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.8);
+            padding: 10px;
+            font-size: 30px;
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -40,11 +53,15 @@
     <a href="speed.html">Show Speed Data</a>
 
     <hr>
-    <div id='jqxChart1' style="align-self: center; margin: auto; width:600px; height: 400px"></div>
-    <div id='jqxChart2' style="align-self: center; margin: auto; width:600px; height: 400px"></div>
-    <div id='jqxChart3' style="align-self: center; margin: auto; width:600px; height: 400px"></div>
-    <div id='jqxChart4' style="align-self: center; margin: auto; width:600px; height: 400px"></div>
-    <div id='jqxChart5' style="align-self: center; margin: auto; width:600px; height: 400px"></div>
+    <div class="grid-container">
+        <div id='jqxChart1' class= "grid-item" style="align-self: center; margin: auto; width:600px; height: 400px"></div>
+        <div id='jqxChart2' class= "grid-item" style="align-self: center; margin: auto; width:600px; height: 400px"></div>
+        <div id='jqxChart3' class= "grid-item" style="align-self: center; margin: auto; width:600px; height: 400px"></div>
+        <div id='jqxChart4' class= "grid-item" style="align-self: center; margin: auto; width:600px; height: 400px"></div>
+        <div id='jqxChart5' class= "grid-item" style="align-self: center; margin: auto; width:600px; height: 400px"></div>
+    </div>
+    <div style="align-self: center; margin: auto;" id="dataTable">
+    </div>
     <script>
         $(document).ready(function () {
             let getSessions = new XMLHttpRequest();
@@ -54,6 +71,7 @@
             getSessions.onreadystatechange = function () {
                 if (getSessions.readyState === XMLHttpRequest.DONE && getSessions.status === 200) {
                     ret_data = JSON.parse(getSessions.responseText);
+                    console.log(JSON.parse(ret_data[0].Repoort));
                     sorted = sort(ret_data);
                     console.log(sorted);
                     buildGraph(sorted);
