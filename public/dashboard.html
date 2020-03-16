@@ -22,8 +22,8 @@
 <body>
     <h1 class="darkgreen">Ben & Tim Analytics</h1>
     <h3 class="darkgreen">DASH BOARD:</h3>
-    <div class = "darkgreen">
-        <span id="loginStatus"></span>
+    <div class="darkgreen">
+        <span id="loginStatus">Loading...</span>
         <button id="btn_logout">Logout</button>
         <script src="../scripts/logout.js"></script>
     </div>
@@ -37,9 +37,10 @@
 
     <hr>
     <section>
-        <div style="align-self: center; margin: auto;" id="UserManagementTable"></div>
+        <div style="align-self: center; margin: auto;" id="UserManagementTable">Loading...</div>
     </section>
 
+    <div id="dialog_div"></div>
 
     <script>
         function showUserManageTable(data) {
@@ -86,13 +87,69 @@
 
                                 }
                                 $(".editButtons").on('click', function (event) {
-                                    console.log(event.target);
-                                    let button_row = event.target.dataset.row;
-                                    let selected_email = $("#UserManagementTable").jqxDataTable('getCellValue', button_row, 'email');
-                                    console.log(selected_email);
+                                    //create dialog to ask for the level they want
+                                    let dialog = document.createElement('dialog');
+                                    let form = document.createElement('form');
+                                    dialog.appendChild(form);
+                                    form.innerHTML = '<label>Change To Level:</label><select id="level"><option value="Admin">Admin</option><option value="Analyst">Analyst</option></select><button type="submit">Submit</button>';
+                                    form.addEventListener("submit", (e) => {
+                                        e.preventDefault();
+                                        let tolevel = form.querySelector("#level").value;
+                                        let button_row = event.target.dataset.row;
+                                        let selected_email = $("#UserManagementTable").jqxDataTable('getCellValue', button_row, 'email');
+                                        console.log(selected_email);
+                                        let changeUserLevel_xhr = new XMLHttpRequest();
+                                        changeUserLevel_xhr.open("GET", `https://cse135hw5timeben.firebaseapp.com/changeUserLevel?uid=${firebase.auth().currentUser.uid}&target=${selected_email}&tolevel=${tolevel}`, true);
+                                        changeUserLevel_xhr.onreadystatechange = function () {
+                                            if (changeUserLevel_xhr.readyState === XMLHttpRequest.DONE && changeUserLevel_xhr.status === 200) {
+                                                ret_data = changeUserLevel_xhr.responseText;
+                                                console.log(ret_data);
+                                                form.parentNode.parentNode.removeChild(dialog);
+                                                location.reload();
+                                            } else if (changeUserLevel_xhr.readyState === XMLHttpRequest.DONE && changeUserLevel_xhr.status === 400) {
+                                                ret_data = changeUserLevel_xhr.responseText;
+                                                console.log(ret_data);
+                                            }
+                                        };
+                                        changeUserLevel_xhr.send();
+                                    })
+                                    document.getElementById('dialog_div').appendChild(dialog);
+                                    dialog.showModal();
+
                                 });
 
                                 $(".deleteButtons").click(function (event) {
+                                    //create dialog to ask for confirmation
+                                    let dialog = document.createElement('dialog');
+                                    let form = document.createElement('form');
+                                    dialog.appendChild(form);
+                                    form.innerHTML = '<p>You Sure?</p><button id="cancel">No</button><button type="submit">Yes</button>';
+                                    form.querySelector('#cancel').addEventListener("click", () => {
+                                        form.parentNode.parentNode.removeChild(dialog);
+                                    })
+                                    form.addEventListener("submit", (e) => {
+                                        e.preventDefault();
+                                        let button_row = event.target.dataset.row;
+                                        let selected_email = $("#UserManagementTable").jqxDataTable('getCellValue', button_row, 'email');
+                                        console.log(selected_email);
+                                        let deleteUser_xhr = new XMLHttpRequest();
+                                        deleteUser_xhr.open("GET", `https://cse135hw5timeben.firebaseapp.com/deleteUser?uid=${firebase.auth().currentUser.uid}&target=${selected_email}`, true);
+                                        deleteUser_xhr.onreadystatechange = function () {
+                                            if (deleteUser_xhr.readyState === XMLHttpRequest.DONE && deleteUser_xhr.status === 200) {
+                                                ret_data = deleteUser_xhr.responseText;
+                                                console.log(ret_data);
+                                                form.parentNode.parentNode.removeChild(dialog);
+                                                location.reload();
+                                            } else if (deleteUser_xhr.readyState === XMLHttpRequest.DONE && deleteUser_xhr.status === 400) {
+                                                ret_data = deleteUser_xhr.responseText;
+                                                console.log(ret_data);
+                                            }
+                                        };
+                                        deleteUser_xhr.send();
+                                    })
+                                    document.getElementById('dialog_div').appendChild(dialog);
+                                    dialog.showModal();
+
                                     console.log(event.target);
                                     let button_row = event.target.dataset.row;
                                     let selected_email = $("#UserManagementTable").jqxDataTable('getCellValue', button_row, 'email');
@@ -117,19 +174,23 @@
                 if (!loginStatus) {
                     window.setTimeout(buildTable, 100);
                 } else {
-                    let getManageTableData_xhr = new XMLHttpRequest();
-                    getManageTableData_xhr.open("GET", `https://cse135hw5timeben.firebaseapp.com/getManageTableData?uid=${firebase.auth().currentUser.uid}`, true);
-                    getManageTableData_xhr.onreadystatechange = function () {
-                        if (getManageTableData_xhr.readyState === XMLHttpRequest.DONE && getManageTableData_xhr.status === 200) {
-                            ret_data = JSON.parse(getManageTableData_xhr.responseText);
-                            console.log(ret_data);
-                            for (user in ret_data) {
-                                user.action = "<button>edit</button><button>delete</button>";
+                    if (loginStatus.auth_level == "Analyst") {
+                        document.getElementById('UserManagementTable').innerText="Click on Browser Data or Speed Data";
+                    } else {
+                        let getManageTableData_xhr = new XMLHttpRequest();
+                        getManageTableData_xhr.open("GET", `https://cse135hw5timeben.firebaseapp.com/getManageTableData?uid=${firebase.auth().currentUser.uid}`, true);
+                        getManageTableData_xhr.onreadystatechange = function () {
+                            if (getManageTableData_xhr.readyState === XMLHttpRequest.DONE && getManageTableData_xhr.status === 200) {
+                                ret_data = JSON.parse(getManageTableData_xhr.responseText);
+                                console.log(ret_data);
+                                for (user in ret_data) {
+                                    user.action = "<button>edit</button><button>delete</button>";
+                                }
+                                showUserManageTable(ret_data);
                             }
-                            showUserManageTable(ret_data);
-                        }
-                    };
-                    getManageTableData_xhr.send();
+                        };
+                        getManageTableData_xhr.send();
+                    }
                 }
             }
             buildTable();

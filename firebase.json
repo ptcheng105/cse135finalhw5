@@ -31,6 +31,12 @@
     },{
       "source": "/getAllSessionsData",
       "function": "getAllSessionsData"
+    },{
+      "source": "/changeUserLevel",
+      "function": "changeUserLevel"
+    },{
+      "source": "/deleteUser",
+      "function": "deleteUser"
     }]
   }
 }
