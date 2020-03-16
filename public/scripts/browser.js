@@ -1,5 +1,4 @@
 function generateNewDataTable() {
-    console.log("yes");
     //get data
     let xhr_getallsessiondata = new XMLHttpRequest();
     xhr_getallsessiondata.open("GET", "https://cse135hw5timeben.firebaseapp.com/getAllSessionsData", true);
@@ -15,9 +14,6 @@ function generateNewDataTable() {
                 }
                 data.push(report);
             });
-
-
-            console.log(data);
             //create table with new data
             // prepare the data
             var source =
@@ -33,7 +29,6 @@ function generateNewDataTable() {
                 element.append($("<div style='margin: 10px;'></div>"));
                 detailsdiv = $(element.children()[0]);
                 //show information
-                console.log(row.staticData)
                 for (key in row.staticData) {
                     let value = row.staticData[key];
                     let linecontainer = $('<span>' + key + " : " + value + "</span></br>");

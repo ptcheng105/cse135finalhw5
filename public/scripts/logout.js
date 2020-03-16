@@ -5,6 +5,5 @@ btn_logout.addEventListener("click", ()=>{
         window.location = "https://cse135hw5timeben.firebaseapp.com/login.html";
       }).catch(function(error) {
         alert("Error signing out, please retry");
-        console.log(error);
       });
 })

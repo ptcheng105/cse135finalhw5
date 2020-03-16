@@ -18,6 +18,5 @@ btn_login.addEventListener("click", ()=>{
     }).catch(function(error){
         var errorCode = error.code;
         var errorMessage = error.message;
-        console.log("Failed log in: " + errorCode +", "+ errorMessage)
     })
 })

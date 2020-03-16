@@ -16,14 +16,12 @@ firebase.auth().onAuthStateChanged(function (user) {
     alert("Un-Authenticated Access, redirecting to Log In page");
     window.location = "https://cse135hw5timeben.firebaseapp.com/login.html"
   } else {
-    console.log(user);
     //user logged in, so verify with server
     let verifyCurrentUser_xhr = new XMLHttpRequest();
     verifyCurrentUser_xhr.open("POST", "https://cse135hw5timeben.firebaseapp.com/verifyCurrentUser", true);
     verifyCurrentUser_xhr.onreadystatechange = function () {
       if (verifyCurrentUser_xhr.readyState === XMLHttpRequest.DONE && verifyCurrentUser_xhr.status === 200) {
         ret_data = JSON.parse(verifyCurrentUser_xhr.responseText);
-        console.log(ret_data);
         document.getElementById("loginStatus").innerText = `Logged In as: ${ret_data.name}, Role: ${ret_data.auth_level}`;
         loginStatus = ret_data;
       }

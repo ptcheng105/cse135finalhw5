@@ -139,7 +139,6 @@ function buildActionList(pageloaded, event_list) {
                 div.appendChild(entry);
                 break;
             default:
-                console.log("error entry")
         }
         entry.setAttribute("onclick", `createConfirmDialog("${entry.innerText}", ()=>{});`);
     })

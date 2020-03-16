@@ -100,18 +100,15 @@
                                         let tolevel = form.querySelector("#level").value;
                                         let button_row = event.target.dataset.row;
                                         let selected_email = $("#UserManagementTable").jqxDataTable('getCellValue', button_row, 'email');
-                                        console.log(selected_email);
                                         let changeUserLevel_xhr = new XMLHttpRequest();
                                         changeUserLevel_xhr.open("GET", `https://cse135hw5timeben.firebaseapp.com/changeUserLevel?uid=${firebase.auth().currentUser.uid}&target=${selected_email}&tolevel=${tolevel}`, true);
                                         changeUserLevel_xhr.onreadystatechange = function () {
                                             if (changeUserLevel_xhr.readyState === XMLHttpRequest.DONE && changeUserLevel_xhr.status === 200) {
                                                 ret_data = changeUserLevel_xhr.responseText;
-                                                console.log(ret_data);
                                                 form.parentNode.parentNode.removeChild(dialog);
                                                 location.reload();
                                             } else if (changeUserLevel_xhr.readyState === XMLHttpRequest.DONE && changeUserLevel_xhr.status === 400) {
                                                 ret_data = changeUserLevel_xhr.responseText;
-                                                console.log(ret_data);
                                             }
                                         };
                                         changeUserLevel_xhr.send();
@@ -134,18 +131,15 @@
                                         e.preventDefault();
                                         let button_row = event.target.dataset.row;
                                         let selected_email = $("#UserManagementTable").jqxDataTable('getCellValue', button_row, 'email');
-                                        console.log(selected_email);
                                         let deleteUser_xhr = new XMLHttpRequest();
                                         deleteUser_xhr.open("GET", `https://cse135hw5timeben.firebaseapp.com/deleteUser?uid=${firebase.auth().currentUser.uid}&target=${selected_email}`, true);
                                         deleteUser_xhr.onreadystatechange = function () {
                                             if (deleteUser_xhr.readyState === XMLHttpRequest.DONE && deleteUser_xhr.status === 200) {
                                                 ret_data = deleteUser_xhr.responseText;
-                                                console.log(ret_data);
                                                 form.parentNode.parentNode.removeChild(dialog);
                                                 location.reload();
                                             } else if (deleteUser_xhr.readyState === XMLHttpRequest.DONE && deleteUser_xhr.status === 400) {
                                                 ret_data = deleteUser_xhr.responseText;
-                                                console.log(ret_data);
                                             }
                                         };
                                         deleteUser_xhr.send();
@@ -153,10 +147,8 @@
                                     document.getElementById('dialog_div').appendChild(dialog);
                                     dialog.showModal();
 
-                                    console.log(event.target);
                                     let button_row = event.target.dataset.row;
                                     let selected_email = $("#UserManagementTable").jqxDataTable('getCellValue', button_row, 'email');
-                                    console.log(selected_email);
                                 });
                             }
                         }
@@ -185,7 +177,6 @@
                         getManageTableData_xhr.onreadystatechange = function () {
                             if (getManageTableData_xhr.readyState === XMLHttpRequest.DONE && getManageTableData_xhr.status === 200) {
                                 ret_data = JSON.parse(getManageTableData_xhr.responseText);
-                                console.log(ret_data);
                                 for (user in ret_data) {
                                     user.action = "<button>edit</button><button>delete</button>";
                                 }
